@@ -9,11 +9,8 @@ export class ProductService {
 			if (filter) {
 				searchParams.append('maxPrice', '2')
 			}
-			if (sortAscending) {
-				searchParams.append('sortDirection', 'asc')
-			} else {
-				searchParams.append('sortDirection', 'desc')
-			}
+			searchParams.append('sortDescending', sortAscending ? 'false' : 'true')
+
 			const requestUrl = url + "?" + searchParams.toString()
 			const response = await fetch(requestUrl.toString())
 
