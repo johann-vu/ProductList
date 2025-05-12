@@ -35,11 +35,11 @@ export default defineComponent({
     },
     async fetchProducts() {
       try {
-        this.products = await ProductService.fetchProducts(
-          "http://localhost:5051/api/products",
-          this.sortProducts,
-          this.filterProducts
-        );
+		this.products = await ProductService.fetchProducts(
+		  `/api/products`,
+		  this.sortProducts,
+		  this.filterProducts
+		);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
