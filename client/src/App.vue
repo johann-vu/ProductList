@@ -22,7 +22,6 @@ export default defineComponent({
   },
   methods: {
     async setView(state: boolean): Promise<void> {
-      this.showDetails = state;
       await this.fetchProducts();
     },
     async setSort(state: boolean): Promise<void> {
@@ -34,12 +33,13 @@ export default defineComponent({
       await this.fetchProducts();
     },
     async fetchProducts() {
+      this.products = [];
       try {
-		this.products = await ProductService.fetchProducts(
-		  `/api/products`,
-		  this.sortProducts,
-		  this.filterProducts
-		);
+        this.products = await ProductService.fetchProducts(
+          `/api/products`,
+          this.sortProducts,
+          this.filterProducts
+        );
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -75,7 +75,8 @@ export default defineComponent({
         @change:sort="setSort"
         @change:filter="setFilter"
       ></TopControlls>
-      <ProductList :products="products" :show-details="showDetails" />
+      <ProductList :products="products" :show-details="showDetails" v-if="products.length > 0"/>
+		<div v-else class="text-gray-500 mt-16">Produkte werden geladen...</div>
       <div class="h-4"></div>
     </main>
   </div>
